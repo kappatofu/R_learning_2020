@@ -1,0 +1,43 @@
+
+
+
+# 假設檢定
+
+testing = function(xbar, s, n, u = 0, alpha = 0.05)
+{
+  tstat = (xbar - u) / (s / sqrt(n))
+  df = n - 1
+  pvalue = (1 - pt(abs(tstat), df)) * 2
+  
+  if (pvalue < alpha)
+  {
+    return(list(p_value = pvalue, t_stat = tstat, result = 'reject'))
+  } else {
+    return(list(p_value = pvalue, t_stat = tstat, result = 'fail to reject'))
+  }
+}
+
+
+###########
+for (i in 1:100)
+{
+  data1 = rnorm(100, 70, 15)
+  data1_xbar = mean(data1)
+  data1_var = var(data1) * 100 / 99
+  data1_sd = sqrt(data1_var)
+  result0 = testing(data1_xbar, data1_sd, 100, u = 70)
+  result1[i] = result0$result
+}
+  
+###########
+
+result2 = testing(1, 2, 16)
+result2$p_value
+
+testing(1, 2, 16)$p_value
+
+
+
+
+
+
